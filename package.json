@@ -1,11 +1,12 @@
 {
   "name": "@adra-network/env-ssm-env",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "ENV file parser to fetch SSM Parameters",
-  "main": "index.js",
-  "bin": {
-    "@adra-network/env-ssm-env": "bin/env-ssm-env",
-    "env-ssm-env": "bin/env-ssm-env"
+  "main": "src/index.js",
+  "bin": "bin/env-ssm-env",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/francoisauclair911/env-ssm-env.git"
   },
   "publishConfig": {
     "access": "public"

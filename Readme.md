@@ -1,4 +1,4 @@
-## ENV-SSM-ENV
+## @adra-network/env-ssm-env
 
 #
 
@@ -13,14 +13,14 @@ This little CLI parses an `env` file containing keys and SSM paths and construct
 ### Installation
 
 ```
-yarn add env-ssm-env
-npm install env-ssm-env
+yarn add @adra-network/env-ssm-env
+npm install @adra-network/env-ssm-env
 ```
 
 Run it via npx
 
 ```
-npx env-ssm-env [options]
+npx @adra-network/env-ssm-env [options]
 ```
 
 ### Options
@@ -88,7 +88,7 @@ KEY2=/ssm/path/to/second-parameter
 
 Running
 
-`npx env-ssm-env --ssm-path-prefix "/dev" --region "eu-west-1" --input-env ".env.example" --output-env ".env.production"`
+`npx @adra-network/env-ssm-env --ssm-path-prefix "/dev" --region "eu-west-1" --input-env ".env.example" --output-env ".env.production"`
 
 Would generate `.env.production` file with the following:
 
