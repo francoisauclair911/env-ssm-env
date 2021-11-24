@@ -8,6 +8,15 @@ This little CLI parses an `env` file containing keys and SSM paths and construct
 
 **Decryption is taken care of if the path is encrypted**
 
+If a key in the `ENV` has a comma separated list of SSM paths, they will be decoded and join with a comma as the value for that key.
+
+```
+SOME_KEY=/ssm/path/1,/ssm/path/2
+```
+Will become
+```
+SOME_KEY=decoded-value-1,decoded-value-2
+```
 #
 
 ### Installation

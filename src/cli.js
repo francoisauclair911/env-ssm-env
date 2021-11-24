@@ -10,8 +10,6 @@ import {
 let writeStream;
 
 export async function cli(args) {
-  process.env.BOB = "woow";
-
   let options = parseArgumentsIntoOptions(args);
   process.env.AWS_REGION = options.REGION;
 
@@ -20,14 +18,25 @@ export async function cli(args) {
   writeStream = fs.createWriteStream(options.outputPath);
 
   for (const key in parsedEnv) {
-    const path = options.pathPrefix + parsedEnv[key];
+      let decryptedValue = []
+       const suffixPath =  parsedEnv[key]
 
-    console.log("\x1b[32;1m%s\x1b[0m", `Fetching SSM Parameter`);
-    console.log(path);
+       const splitted =  suffixPath.split(',');
+      console.log("\x1b[32;1m%s\x1b[0m", `Decoding key : ${key}`);
+    if (splitted.length === 1) {
+      console.log(`SSM  path : ${suffixPath}`);
 
-    const decryptedValue = await getSSM(path);
-
-    appendToFile(writeStream, `${key}="${decryptedValue}"`);
+      const path = options.pathPrefix + suffixPath;
+      decryptedValue = [...decryptedValue,  await getSSM(path)]
+    } else {
+      console.log("\x1b[32;1m%s\x1b[0m", `Detected Multiple SSM for key : ${key}`);
+      for (const newPath of splitted) {
+        const path = options.pathPrefix + newPath;
+        console.log(`SSM path : ${path}`);
+         decryptedValue = [...decryptedValue,  await getSSM(path)]
+      }
+    }
+    appendToFile(writeStream, `${key}="${decryptedValue.join(',')}"`);
   }
   console.log("\x1b[32;1m%s\x1b[0m", `Creating new .env file`);
   writeStream.close();

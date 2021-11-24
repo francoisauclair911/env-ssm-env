@@ -1,4 +1,6 @@
 import arg from "arg";
+import fs from "fs";
+
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 const client = new SSMClient();
 function parseArgumentsIntoOptions(rawArgs) {
@@ -37,7 +39,7 @@ function checkFileExistsSync(filepath) {
   try {
     fs.accessSync(filepath, fs.constants.F_OK);
   } catch (e) {
-    return console.error("Input env path is invalid");
+    console.error("Input env path is invalid");
   }
   return console.log("Input-env :", filepath);
 }
