@@ -13,10 +13,13 @@ If a key in the `ENV` has a comma separated list of SSM paths, they will be deco
 ```
 SOME_KEY=/ssm/path/1,/ssm/path/2
 ```
+
 Will become
+
 ```
 SOME_KEY=decoded-value-1,decoded-value-2
 ```
+
 #
 
 ### Installation
@@ -53,6 +56,18 @@ Specifies the path of the env to parse
 _Example_ `--input-env "./.env.example"`
 
 _Default_ : `./.env.example`
+
+#
+
+`--docker-compatible <boolean>`
+
+Doesn't prefix the generate value with double quotes (`"`)
+
+See this for more information [link](https://dev.to/tvanantwerp/don-t-quote-environment-variables-in-docker-268h)
+
+_Example_ `--docker-compatible`
+
+_Default_ : `false`
 
 #
 
@@ -105,3 +120,12 @@ Would generate `.env.production` file with the following:
 KEY=decypted-value-first-parameter
 KEY2=decypted-value-second-parameter
 ```
+
+### Changelog
+
+#
+
+**1.0.8**
+
+- Implement the `--docker-compatible` flag
+- Add this changelog

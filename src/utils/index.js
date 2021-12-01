@@ -2,7 +2,7 @@ import arg from "arg";
 import fs from "fs";
 
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
-const client = new SSMClient();
+const client = new SSMClient({});
 function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
     {
@@ -10,6 +10,7 @@ function parseArgumentsIntoOptions(rawArgs) {
       "--input-env": String,
       "--output-env": String,
       "--region": String,
+      "--docker-compatible": Boolean,
     },
     {
       argv: rawArgs.slice(2),
@@ -24,8 +25,19 @@ function parseArgumentsIntoOptions(rawArgs) {
       "us-east-2",
     inputPath: args["--input-env"] || "./.env.example",
     outputPath: args["--output-env"] || "./.env",
+    dockerCompatible: args["--docker-compatible"] || false,
   };
 }
+const generateFinalString = (key, decryptedValue, dockerCompatible = false) => {
+  const quotes = dockerCompatible ? "" : '"';
+  let string;
+  string = key;
+  string += "=";
+  string += quotes;
+  string += decryptedValue.join(",");
+  string += quotes;
+  return string;
+};
 const getSSM = async (Name, WithDecryption = true) => {
   const command = new GetParameterCommand({
     Name,
@@ -47,4 +59,10 @@ function checkFileExistsSync(filepath) {
 const appendToFile = (stream, string) => {
   stream.write(string + "\r\n");
 };
-export { appendToFile, parseArgumentsIntoOptions, checkFileExistsSync, getSSM };
+export {
+  appendToFile,
+  parseArgumentsIntoOptions,
+  checkFileExistsSync,
+  getSSM,
+  generateFinalString,
+};

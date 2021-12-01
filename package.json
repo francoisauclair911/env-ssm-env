@@ -1,6 +1,6 @@
 {
   "name": "@adra-network/env-ssm-env",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "ENV file parser to fetch SSM Parameters",
   "main": "src/index.js",
   "bin": "bin/env-ssm-env",
